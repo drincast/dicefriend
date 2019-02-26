@@ -1,0 +1,24 @@
+{
+  "name": "dicefriendserver",
+  "version": "1.0.0",
+  "description": "Proyecto nodejs con expressjs para el manejo del servidor del proyecto dicefriend, es si sera el controlador del juego de dado",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dice",
+    "players",
+    "bet",
+    "apuesta",
+    "juego",
+    "dado"
+  ],
+  "author": "drincast",
+  "license": "CC-BY-NC-ND-4.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  }
+}

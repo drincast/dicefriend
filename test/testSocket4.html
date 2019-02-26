@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TEST Socket.io con server firebase</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="http://localhost:3002/dicefriend-x/us-central1/socket.io/socket.io.js"></script>
+    <!-- <script type="text/javascript" src="https://us-central1-dicefriend-x.cloudfunctions.net/socket.io/socket.io.js"></script> -->
+</head>
+<body>
+    <h1>TEST Socket.io</h1>
+    <script type="text/javascript">
+        //socket
+        var socket = io('http://localhost:3002/dicefriend-x/us-central1');
+        console.log(socket);
+        
+        function render(data) {
+            console.log(data);
+        }
+
+        socket.on('messages', function (data) {
+            console.log('en cliente', data);
+            render(data);
+        })
+
+        function addMessage(e) {
+            var mensaje = {
+                author: document.getElementById('username').value,
+                text: document.getElementById('texto').value
+            };
+
+            socket.emit('new-message', mensaje);
+            return false;
+        }
+
+        function addMessageplus(user, text) {
+            var mensaje = {
+                author: user,
+                text: text
+            };
+
+            socket.emit('new-message', mensaje);
+            return false;
+        }
+    </script>
+</body>
+</html>

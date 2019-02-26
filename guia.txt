@@ -1,0 +1,7 @@
+ejecutar firebase functions local
+https://firebase.google.com/docs/functions/local-emulator?hl=es-419
+
+npm install --save firebase-functions@latest
+npm install -g firebase-tools
+
+firebase serve -p 3002
