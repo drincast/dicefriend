@@ -5,3 +5,17 @@ npm install --save firebase-functions@latest
 npm install -g firebase-tools
 
 firebase serve -p 3002
+
+
+
+
+
+
+
+
+
+##GIT
+
+subir un proyecto existente
+git remote add origin https://github.com/drincast/dicefriend.git
+git push -u origin master
