@@ -41,9 +41,21 @@ function init(){
 
 //Escuchas de eventos de socket desde el servidor
 socket.on('connect', function(resp) {
-    console.log('Asociado al juego !!! :)');
+    console.log('Asociando al juego ...');
      
     socket.emit('addPlayer', player);
+});
+
+socket.on('ServerSendMessage', function(resp) {
+    if(resp.isError === false){
+        console.log(resp.txtMessage);            
+    }
+    else{
+        console.log('resp', resp); 
+        alert(resp.txtMessage);
+        socket = null;
+        window.location = 'index.html';
+    }
 });
 
 socket.on('info_socket', function(resp) {
