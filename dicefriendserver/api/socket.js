@@ -7,7 +7,7 @@ class Socket {
     constructor(){
         this.io = null;
         this.objDataGame = new DataGameSinglenton();
-        this.i2 = new DataGameSinglenton(); //sera la misma instancia anterior
+        //this.i2 = new DataGameSinglenton(); //sera la misma instancia anterior
     }
 
     StartSockets(server){
@@ -20,7 +20,7 @@ class Socket {
 
                 socket.on('disconnect', () => {this.DisconnectClient(socket)});
 
-                socket.on('addPlayer', (data) => {this.AddPlayer(socket, data)});
+                socket.on('addPlayer', (data, callback) => {this.AddPlayer(socket, data, callback)});
 
                 socket.on('modplayer', (data) => {this.ModPlayer(socket, data)});
 
@@ -49,14 +49,17 @@ class Socket {
         if(socket.noInTheSystem === undefined){
             console.log(`jugador deconectado ${this.objDataGame.GetPlayerXId(socket.client.id).nickname}`, );
             this.objDataGame.RemovePlayer(socket.client.id);
-            console.log('remove objDataGame', socket.client.id, this.objDataGame)
+            console.log('remove objDataGame', socket.client.id, this.TestImpOnlyIdName())
+            
+            socket.broadcast.emit('render_Players', this.GetPlayers());
+            socket.emit('render_Players', this.GetPlayers());
         }
         else{
             console.log('removing client due to an error');
         }
     }
 
-    AddPlayer(socket, data){
+    AddPlayer(socket, data, callback){
         let player = new Player();
         let existsPlayer = this.objDataGame.GetPlayerXNickname(data.nickname) === undefined ? false : true;
 
@@ -78,7 +81,12 @@ class Socket {
             // console.log('add i2', this.i2)
             // console.log('add objDataSinglenton', objDataSinglenton)
 
+            //!callback && callback(player);
+
             this.SendMessageToClient(socket, msg);
+
+            socket.broadcast.emit('render_Players', this.GetPlayers());
+            socket.emit('render_Players', this.GetPlayers());
         } else{
             socket.noInTheSystem = true;
             socket.disconnect();
@@ -96,20 +104,26 @@ class Socket {
     ModPlayer(socket, data){
         this.i1.players.push(data);
         console.log('mod objDataGame', this.objDataGame)
-        console.log('mod i2', this.i2)
+        //console.log('mod i2', this.i2)
         //console.log('mod objDataSinglenton', objDataSinglenton)
     }
 
     GetPlayer(socket, data){
         console.log('mod objDataGame', this.objDataGame)
-        console.log('mod i2', this.i2)
+        //console.log('mod i2', this.i2)
         //console.log('get objDataSinglenton', objDataSinglenton)
+    }
+
+    GetPlayers(){
+        return this.objDataGame.players;
     }
 
     SendMessageToClient(socket, data){
         socket.emit('ServerSendMessage', data);
     }
 
+    
+    //UTILS AND METHODS OF TEST
     TestSocket(socket, data){
         console.log('objDataGame', this.objDataGame)
         //console.log('i2', this.i2); //sera la misma instancia anterior)
@@ -119,6 +133,19 @@ class Socket {
         console.log('clients', Object.keys(socket.nsp.server.engine.clients))
         //
     }
+
+    TestImpOnlyIdName(){
+        let imp = '';
+        let i = 0;
+
+        this.objDataGame.players.forEach(element => {
+            imp = imp + `[${i} - ${element.id} - ${element.nickname}], `;
+        });
+
+        console.log(`total jugadores: ${this.objDataGame.numberPlayers}`, imp);
+    }
+
+
 }
 
 module.exports = {

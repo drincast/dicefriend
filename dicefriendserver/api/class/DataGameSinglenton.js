@@ -44,17 +44,12 @@ class DataGameSinglenton {
         let player = undefined;
 
         if(this.players.length > 0){
-            console.log('in !!!!!')
-            //player = this.players.find(item => item.nickname === nickname);
             player = this.players.find((item) => {
                 if(item.nickname === nickname){
-                    console.log(item)
                     return item;
                 }
             });
         }
-
-        console.log('GetPlayerXNickname player', nickname, player, this.players)
 
         return player;
     }
@@ -65,12 +60,9 @@ class DataGameSinglenton {
     }
 
     RemovePlayer(player){        
-        let index = this.players.findIndex(item => item.id === player)
-        console.log('remove', player, index)
-        //console.log('array ant', this.players);
+        let index = this.players.findIndex(item => item.id === player);
         this.players.splice(index, 1);
         this.numberPlayers -= 1;
-        //console.log('array desp', this.players);
     }
     
 }

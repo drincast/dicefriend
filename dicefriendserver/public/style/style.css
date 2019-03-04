@@ -1,0 +1,43 @@
+/*
+GOBALS
+*/
+* {
+    font-size: 16px;
+}
+
+
+/*
+SPECIFIC
+*/
+
+:root{
+    --pal-color-green-01: #0f402a;
+    --pal-color-green-02: #1e7f53;
+    --pal-color-green-03: #2dbf7d;
+    --pal-color-green-04: #36e596;
+    --pal-color-green-05: #3cffa6;
+}
+
+.lstItems01{
+    border-style: solid;
+    border-width: 1px;
+    list-style-type: none;
+    padding: 0rem;
+}
+
+.lstItems01 li{
+    background-color: var(--pal-color-green-01);
+    border-top: 0px;
+    border-bottom: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: var(--pal-color-green-02);
+    border-style: solid; 
+    color: var(--pal-color-green-03);
+    padding: 0.25rem 0.5rem 
+}
+
+.lstItems01 li span{
+    color: var(--pal-color-green-04);
+    padding-left: 0.25rem; 
+}

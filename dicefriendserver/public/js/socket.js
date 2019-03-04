@@ -44,6 +44,7 @@ socket.on('connect', function(resp) {
     console.log('Asociando al juego ...');
      
     socket.emit('addPlayer', player);
+    //socket.emit('addPlayer', player, AddPlayerToDivLstPlayer);
 });
 
 socket.on('ServerSendMessage', function(resp) {
@@ -61,3 +62,62 @@ socket.on('ServerSendMessage', function(resp) {
 socket.on('info_socket', function(resp) {
     console.log('info_socket', resp);
 });
+
+socket.on('render_Players', function(resp){
+    var ulLstPlayers = document.getElementById('ulLstPlayers');
+
+    while (ulLstPlayers.firstChild) {
+        ulLstPlayers.removeChild(ulLstPlayers.firstChild);
+      }
+
+    if(resp.length > 0){
+        resp.forEach(element => {
+            CreateElementHTMLToAddLstPlayers('li', ulLstPlayers, element);
+        });
+    }
+})
+
+//functions
+function CreateElementHTMLToAddLstPlayers(type, containerElement, data){
+    // var element = document.createElement(type);
+    // var spanCash = document.createElement('span');
+
+    // element.innerHTML = data.nickname;
+    // element.id = data.id
+    // spanCash.innerHTML = data.cash;
+
+    // element.appendChild(spanCash);
+    // containerElement.appendChild(element);
+
+    var element = document.createElement(type);    
+    var spanCash = document.createElement('span');
+
+    element.innerHTML = data.nickname;
+    element.id = data.id
+    spanCash.innerHTML = data.cash;
+    spanCash.classList.add("text-warning");
+    spanCash.classList.add("pl-1");
+    element.classList.add('bg-success');
+    element.classList.add('border-bottom');
+    element.classList.add('text-light');
+    
+    
+    element.appendChild(spanCash);
+    containerElement.appendChild(element);
+}
+
+
+//functions anonymous
+var AddPlayerToDivLstPlayer = function(data){
+    var divLstPlayers = document.getElementById('divLstPlayers');
+    var ulLstPlayers = document.getElementById('ulLstPlayers');
+    
+    divLstPlayers.style.display = "block";
+
+    //add to list
+    
+    CreateElementHTMLToAddLstPlayers('li', ulLstPlayers, data);
+
+    console.log('add player !!')
+}
+
